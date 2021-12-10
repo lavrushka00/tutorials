@@ -1,4 +1,4 @@
-import "./App.css";
+import "../App.css";
 import React from "react";
 
 const FunctComponent = (props) => {
@@ -54,7 +54,7 @@ function App() {
     <div className="body">
       <ClassComponent name="Вася" registredAt={new Date(2021, 5, 22)} />
 
-      <FunctComponent name="Вася" registredAt={new Date(2021, 5, 22)} />
+      <FunctComponent name="Васsя" registredAt={new Date(2021, 5, 22)} />
     </div>
   );
 }
