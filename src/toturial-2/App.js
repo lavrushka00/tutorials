@@ -2,12 +2,11 @@ import React from "react";
 import "../App.css"
 
 function App() {
-    let email = ""
-    let password = ""
-
+    let email = ''
+    let password = ''
     function handleSubmit(e){
-        email = e.target[0].value
-        password = e.target[1].value
+        email = e.target[0].value.trim()
+        password = e.target[1].value.trim()
 
        if(email === '' || password === '')
        {
