@@ -1,0 +1,24 @@
+body {
+    display: flex;
+ 
+    justify-content: center;
+}
+
+.comments {
+    border: 1px solid rgb(204, 203, 203);
+    width: fit-content;
+    
+    min-width: 360px;
+}
+.feedBack {
+    border: 1px solid rgb(204, 203, 203);
+    margin-top: 20px;
+    width: 320px;
+    height: 340px;
+    padding: 20px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    
+ 
+}
