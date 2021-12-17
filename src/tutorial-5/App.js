@@ -1,69 +1,74 @@
 import * as React from "react";
-import Comments from './Comments/Comments'
-import  { useEffect } from 'react';
-
+import Comments from "./Comments/Comments";
+import { useEffect } from "react";
 
 import { Button } from "@mui/material";
-import './App.css'
-import TextField from '@mui/material/TextField';
-
+import "./App.css";
+import TextField from "@mui/material/TextField";
 
 function App() {
-  
-     const [comments, setComments] = React.useState([])
+  const [comments, setComments] = React.useState([]);
+  const [fields, setFields] = React.useState({
+    fullName: " ",
+    email: " ",
+    text: " ",
+  });
 
-    useEffect(() => {
-        setComments(JSON.parse(localStorage.getItem("comments")))
-       }, []) 
+  useEffect(() => {
+    setComments(JSON.parse(localStorage.getItem("comments")));
+  }, []);
 
-    useEffect(() => {
-      localStorage.setItem('comments', JSON.stringify(comments))
-    }, [comments])
+  useEffect(() => {
+    localStorage.setItem("comments", JSON.stringify(comments));
+  }, [comments]);
 
+  function montoToStr(num) {
+    return num > 12 || num < 1
+      ? null
+      : "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря".split(
+          ","
+        )[num - 1];
+  }
 
-    const [fullName, setFullName] = React.useState("")
-    const [email, setEmail] = React.useState("")
-    const [text, setText] = React.useState("")
-
-    function montoToStr(num) {
-      return num > 12 || num < 1
-        ? null
-        : "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря".split(
-            ","
-          )[num - 1];
-    }
-
-    const AddFeedBack = (e) => {
-      if(fullName == "" || email == "" || text == "" )
-      {
-        alert("Введите корректные поля!")
-      }else{
-        let date = new Date()
-      date = date.getDate() + ' ' + montoToStr(date.getMonth()) + " " + date.getHours() + ":" + date.getMinutes()
-        setComments([...comments,
+  const AddFeedBack = () => {
+    if (fields.email === " " || fields.text === " " || fields.fullName === " ") {
+      alert("Введите корректные поля!");
+    } else {
+      let date = new Date();
+      date =
+        date.getDate() +
+        " " +
+        montoToStr(date.getMonth()) +
+        " " +
+        date.getHours() +
+        ":" +
+        date.getMinutes();
+      setComments([
+        ...comments,
         {
-            fullName: fullName,
-            email: email,
-            createdAt: date,
-            text: text
-        }])
+          fullName: fields.fullName,
+          email: fields.email,
+          createdAt: date,
+          text: fields.text,
+        },
+      ]);
 
-        setFullName("")
-        setEmail("")
-        setText("")
-      }
+      setFields({
+        fullName: "",
+        email: "",
+        text: "",
+      });
     }
+  };
 
-    const deleteItem = (index) => {
-      setComments(comments.filter((_, i) => i !== index)) 
-    }
-
-   
+  const deleteItem = (index) => {
+    setComments(comments.filter((_, i) => i !== index));
+  };
 
   return (
     <div>
       <div className="comments">
-        <Comments comments = {comments} deleteItem = {deleteItem} />
+        <Comments comments={comments} deleteItem={deleteItem} />
       </div>
 
       <div className="feedBack">
@@ -72,16 +77,16 @@ function App() {
           label="Имя"
           multiline
           maxRows={4}
-          value={fullName}
-          onChange = {(e) => setFullName(e.target.value)}
+          value={fields.fullName}
+          onChange={(e) => setFields({ ...fields, fullName: e.target.value })}
         />
         <TextField
           id="outlined-multiline-flexible"
           label="Почта"
           multiline
           maxRows={4}
-          value={email}
-          onChange = {(e) => setEmail(e.target.value)}
+          value={fields.email}
+          onChange={(e) => setFields({ ...fields, email: e.target.value })}
         />
 
         <TextField
@@ -89,12 +94,13 @@ function App() {
           label="Текст"
           multiline
           rows={4}
-          value={text}
-          onChange = {(e) => setText(e.target.value)}
+          value={fields.text}
+          onChange={(e) => setFields({ ...fields, text: e.target.value })}
         />
 
-        <Button onClick={(e) =>AddFeedBack(e)} variant="contained">Отправить</Button>
-
+        <Button onClick={AddFeedBack} variant="contained">
+          Отправить
+        </Button>
       </div>
     </div>
   );
